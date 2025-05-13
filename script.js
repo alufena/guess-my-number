@@ -8,21 +8,23 @@
 // console.log(document.querySelector('.guess').value); // retorna "<empty string>" por enquanto
 // document.querySelector('.guess').value = 2; // põe um valor padrão
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 
 let score = 20;
 
-document.querySelector('.number').textContent = secretNumber;
+// document.querySelector('.number').textContent = secretNumber;
 
 document.querySelector('.check').addEventListener('click', function () {
-    const guess = +(document.querySelector('.guess').value);
+    const guess = +document.querySelector('.guess').value;
     console.log(guess, typeof guess);
-    if (!guess) { // input vazio ou com 0
+    if (!guess) {
+        // input vazio ou com 0
         document.querySelector('.message').textContent = 'No number';
     } else if (guess === secretNumber) {
         document.querySelector('.message').textContent = 'Correct number';
-        document.querySelector('body').style.backgroundColor = '#60b347'
-        document.querySelector('.number').style.width = '30rem' // atribua-se a uma string sempre que manipular um inline style
+        document.querySelector('.number').textContent = secretNumber;
+        document.querySelector('body').style.backgroundColor = '#60b347';
+        document.querySelector('.number').style.width = '30rem'; // atribua-se a uma string sempre que manipular um inline style
     } else if (guess > secretNumber) {
         if (score > 1) {
             document.querySelector('.message').textContent = 'Too high';
@@ -42,4 +44,14 @@ document.querySelector('.check').addEventListener('click', function () {
             document.querySelector('.score').textContent = 0;
         }
     }
+});
+
+document.querySelector('.again').addEventListener('click', function () { // restaura as condições iniciais
+    score = 20;
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    document.querySelector('.message').textContent = 'Start guessing...'
+    document.querySelector('.score').textContent = score; // reseta score
+    document.querySelector('.guess').value = ''; // limpa input
+    document.querySelector('body').style.backgroundColor = '#222';
+    document.querySelector('.number').style.width = '15rem';
 });
